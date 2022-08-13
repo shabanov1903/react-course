@@ -1,8 +1,16 @@
 import './Message.scss';
+import cn from 'classnames';
 
-export function Message(props) {
-
-  const { text } = props;
+export default function Message({message}) {
   
-  return <h1>{text}</h1>;
+  return(
+    <div className={cn(
+      'message',
+      message.sender
+    )}>
+      <div><strong>Автор:</strong> {message.author}</div>
+      <div><strong>Сообщение:</strong> {message.text}</div>
+      <div><strong>Время:</strong> {message.time}</div>
+    </div>
+  );
 }
