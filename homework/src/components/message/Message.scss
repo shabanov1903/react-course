@@ -1,3 +1,17 @@
-h1 {
-  color: purple;
+@mixin message {
+  background-color: white;
+  border-radius: 15px;
+  text-align: start;
+  padding: 10px;
+  margin: 10px;
+}
+
+.user {
+  @include message;
+  border: 2px solid cadetblue;
+}
+
+.robot {
+  @include message;
+  border: 2px solid crimson;
 }
