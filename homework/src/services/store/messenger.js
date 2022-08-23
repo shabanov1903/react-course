@@ -21,10 +21,11 @@ export const messengerSlice = createSlice({
     },
     removechat: (state, action) => {
       const pos = state.chatList.findIndex(x => x.id === action.payload);
-      state.chatList.splice(pos, 1);
+      let arr = [...state.chatList];
+      arr.splice(pos, 1);
       return {
         ...state,
-        chatList: state.chatList
+        chatList: [...arr]
       }
     },
     changeId: (state, action) => {

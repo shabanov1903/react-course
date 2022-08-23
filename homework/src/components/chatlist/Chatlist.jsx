@@ -13,12 +13,14 @@ import {
   useNavigate
 } from "react-router-dom";
 import { TextField } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import { addchat, removechat, changeId } from 'services/store/messenger'
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function Chat({list}) {
 
   const dispatch = useDispatch();
+  // @ts-ignore
+  let chatIdRedux = useSelector((state) => state.messenger.chatId);
 
   const [chatname, setChatname] = useState('');
   const theme = useTheme();
@@ -56,7 +58,11 @@ export default function Chat({list}) {
                     </ListItemIcon>
                     <ListItemText primary={el.name}/>
                     <ListItemIcon>
-                      <DeleteForeverIcon className='delete' onClick={() => remove(el.id)}/>
+                      <DeleteForeverIcon className='delete' onClick={(event) => {
+                        event.stopPropagation();
+                        remove(el.id);
+                        if (chatIdRedux === el.id) navigate(``, { replace: false });
+                      }}/>
                     </ListItemIcon>
                   </ListItemButton>
                 </ListItem>

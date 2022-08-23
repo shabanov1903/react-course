@@ -32,11 +32,11 @@ const Messenger = () => {
   }, [getSender()]);
 
   function getMessageList() {
-    return chatListRedux?.find(x => x.id === chatIdRedux).messageList;
+    return chatListRedux?.find(x => x.id === chatIdRedux)?.messageList;
   }
 
   function getSender() {
-    return getMessageList().slice(-1).find(x => true)?.sender;
+    return getMessageList()?.slice(-1)?.find(x => true)?.sender;
   }
 
   return (
