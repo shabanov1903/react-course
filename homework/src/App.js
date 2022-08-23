@@ -1,5 +1,5 @@
 import './App.scss';
-import Theme from './components/theme/Theme';
+import Header from './components/header/Header';
 import { ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { Themes } from './styles/Themes';
@@ -23,7 +23,7 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <Theme setTheme={setTheme}/>
+          <Header setTheme={setTheme}/>
           <Routes>
             <Route path="/" element={<Menu/>}/>
             <Route path="/profile" element={<Profile/>}/>
