@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Messenger.scss';
 import { Grid } from '@mui/material';
@@ -9,42 +9,46 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { addmessage } from 'services/store/messenger';
 
 const Messenger = () => {
-  
-  const [messageList, setMessageList] = useState([]);
-  const [sender, setSender] = useState();
-  const [chatList, setСhatList] = useState([
-    {id: 1, name: "Пожарная служба", messageList: []},
-    {id: 2, name: "Полиция", messageList: []},
-    {id: 3, name: "Скорая помощь", messageList: []},
-    {id: 4, name: "Техническая поддержка", messageList: []}
-  ]);
-  
+
+  // @ts-ignore
+  let chatListRedux = useSelector((state) => state.messenger.chatList);
+  // @ts-ignore
+  let chatIdRedux = useSelector((state) => state.messenger.chatId);
+  // @ts-ignore
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (messageList.length > 0 && sender === "user")
-    setTimeout(() => setMessageList(state => [...state, {
+    if (getSender() === 'user')
+    setTimeout(() => dispatch(addmessage({
       author: "Робот",
       text: "Техническая поддержка свяжется с Вами в ближайшее время",
       sender: "robot",
       time: new Date().toTimeString()
-    }]), 1500);
-  }, [sender]);
+    })), 1500);
+  }, [getSender()]);
 
-  useEffect(() => {
-    setSender(messageList.slice(-1).find(x => true)?.sender);
-  }, [messageList]);
+  function getMessageList() {
+    return chatListRedux?.find(x => x.id === chatIdRedux).messageList;
+  }
+
+  function getSender() {
+    return getMessageList().slice(-1).find(x => true)?.sender;
+  }
 
   return (
     <div className="Messenger">
-    <Form setList={setMessageList}/>
+      <Form/>
       <Grid container>
         <Grid item xs={3}>
-          <Chatlist list={chatList} change={setСhatList}/>
+          <Chatlist list={chatListRedux}/>
         </Grid>
         <Grid item xs={9}>
           <Routes>
-            <Route path="/:id" element={<Chat list={messageList}/>} />
+            <Route path="/:chatId" element={<Chat list={getMessageList()}/>} />
             <Route path="*" element={<ChatNotFound/>} />
           </Routes>
         </Grid>

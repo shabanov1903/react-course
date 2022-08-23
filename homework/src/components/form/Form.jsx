@@ -6,10 +6,13 @@ import SendIcon from '@mui/icons-material/Send';
 import { useState, useRef } from 'react';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addmessage } from 'services/store/messenger';
 
-export default function Form(props) {
+export default function Form() {
 
-  const { setList } = props;
+  // @ts-ignore
+  const dispatch = useDispatch();
   
   const [author, setAuthor] = useState('');
   const [text, setText] = useState('');
@@ -17,30 +20,40 @@ export default function Form(props) {
   const textRef = useRef(null);
   const theme = useTheme();
 
+  // @ts-ignore
+  let chatIdRedux = useSelector((state) => state.messenger.chatId);
+
   const click = () => {
     fill(author, text, "user");
     focus();
   }
 
   function fill(author, text, sender) {
-    if (text === '' || author === '') return;
-    setList(state => [...state, {
+    if (text === '' || author === '' || chatIdRedux !== getUrlId()) return;
+    dispatch(addmessage({
       author: author,
       text: text,
       sender: sender,
       time: new Date().toTimeString()
-    }]);
+    }));
     setText('');
   }
 
   function focus() {
     textRef.current.focus()
   }
+
+  function getUrlId() {
+    const path = window.location.href;
+    const index = path.lastIndexOf('/');
+    return parseInt(path.slice(index + 1));
+  }
   
   return(
     <div>
       <Box
         component="form"
+        // @ts-ignore
         sx={{ bgcolor: theme.background, borderRadius: 2 }}
         noValidate
         autoComplete="off"

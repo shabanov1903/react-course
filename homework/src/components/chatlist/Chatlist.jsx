@@ -13,41 +13,43 @@ import {
   useNavigate
 } from "react-router-dom";
 import { TextField } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { addchat, removechat, changeId } from 'services/store/messenger'
 
-export default function Chat({list, change}) {
+export default function Chat({list}) {
+
+  const dispatch = useDispatch();
 
   const [chatname, setChatname] = useState('');
   const theme = useTheme();
   const navigate = useNavigate();
 
   const add = (name) => {
-    if (chatname === '') return;
-    let max = Math.max(...list.map(x => x.id));
-    isFinite(max) ? max = max : max = 0;
-    change(state => [...state, {
-      id: max + 1,
-      name: name
-    }]);
+    if (name === '') return;
+    dispatch(addchat(name));
     setChatname('');
   }
 
   const remove = (id) => {
-    const pos = list.findIndex(x => x.id === id);
-    change(state => {
-      state.splice(pos, 1);
-      return state;
-    });
+    dispatch(removechat(id));
   }
   
-
   return(
     <div>
-      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: theme.background, borderRadius: 2 }}>
+      <Box sx={{
+        width: '100%',
+        maxWidth: 360,
+        // @ts-ignore
+        bgcolor: theme.background,
+        borderRadius: 2 }}>
         <nav aria-label="main mailbox folders">
           <List>
             {
               list.map(el => (
-                <ListItem disablePadding key={el.id} onClick={() => navigate(`${el.id}`, { replace: false })}>
+                <ListItem disablePadding key={el.id} onClick={() => {
+                  dispatch(changeId(el.id));
+                  navigate(`${el.id}`, { replace: false });
+                }}>
                   <ListItemButton>
                     <ListItemIcon>
                       <MessageIcon/>
@@ -64,6 +66,7 @@ export default function Chat({list, change}) {
           <TextField
             label="Создать чат (Enter)"
             variant="outlined"
+            // @ts-ignore
             onKeyDown={(e) => e.key === 'Enter' && add(e.target.value)}
             value={chatname}
             onChange={(event) => setChatname(event.target.value)}
