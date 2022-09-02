@@ -10,7 +10,7 @@ import {
   Route,
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { addmessage } from 'services/store/messenger';
+import { addmessage } from 'services/store/slices/messenger';
 
 const Messenger = () => {
 

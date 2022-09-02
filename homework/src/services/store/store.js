@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import messengerReducer from './messenger'
-import profileReducer from './profile'
+import messengerReducer from './slices/messenger'
+import profileReducer from './slices/profile'
 
 export default configureStore({
   reducer: {

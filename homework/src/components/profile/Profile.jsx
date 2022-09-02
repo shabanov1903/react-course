@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Profile.scss';
 import Switch from '@mui/material/Switch';
-import { check } from 'services/store/profile';
+import { check } from 'services/store/slices/profile';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Profile = () => {
