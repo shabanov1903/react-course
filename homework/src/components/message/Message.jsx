@@ -1,5 +1,6 @@
 import './Message.scss';
 import cn from 'classnames';
+import React from 'react';
 
 export default function Message({message}) {
   
