@@ -7,7 +7,7 @@ import { useState, useRef } from 'react';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addmessage } from 'services/store/messenger';
+import { addmessage } from 'services/store/slices/messenger';
 
 export default function Form() {
 

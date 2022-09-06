@@ -13,7 +13,7 @@ import {
   useNavigate
 } from "react-router-dom";
 import { TextField } from '@mui/material';
-import { addchat, removechat, changeId } from 'services/store/messenger'
+import { addchat, removechat, changeId } from 'services/store/slices/messenger'
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function Chat({list}) {
