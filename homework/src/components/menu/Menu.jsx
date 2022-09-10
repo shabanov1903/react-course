@@ -22,6 +22,22 @@ const Menu = () => (
         </CardActionArea>
       </Card>
     </Link>
+    <Link to="/contacts">
+      <Card sx={{ width: 300 }}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            height="275"
+            image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzJTUKJF559kU0N4E_fS1dEyIPSUGWT64XQw&usqp=CAU"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div" className='card-header'>
+              Контакты
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Link>
     <Link to="/messenger">
       <Card sx={{ width: 300 }}>
         <CardActionArea>

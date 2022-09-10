@@ -12,8 +12,10 @@ import {
 } from "react-router-dom";
 import Profile from 'components/profile/Profile';
 import Menu from 'components/menu/Menu';
-import store from './services/store/store';
+import { persistor, store } from './services/store/store';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import Contacts from 'components/contacts/Сontacts';
 
 function App() {
 
@@ -21,16 +23,19 @@ function App() {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Header setTheme={setTheme}/>
-          <Routes>
-            <Route path="/" element={<Menu/>}/>
-            <Route path="/profile" element={<Profile/>}/>
-            <Route path="/messenger/*" element={<Messenger/>}/>
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Header setTheme={setTheme}/>
+            <Routes>
+              <Route path="/" element={<Menu/>}/>
+              <Route path="/profile" element={<Profile/>}/>
+              <Route path="/contacts" element={<Contacts/>}/>
+              <Route path="/messenger/*" element={<Messenger/>}/>
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }

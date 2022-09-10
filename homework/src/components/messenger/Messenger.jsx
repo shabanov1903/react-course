@@ -10,7 +10,8 @@ import {
   Route,
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { addmessage } from 'services/store/slices/messenger';
+import { thunkDispatch } from '../../services/store/thunk/thunk'
+import { robotAnswer } from '../../services/store/thunk/robotAnswer'
 
 const Messenger = () => {
 
@@ -22,13 +23,9 @@ const Messenger = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (getSender() === 'user')
-    setTimeout(() => dispatch(addmessage({
-      author: "Робот",
-      text: "Техническая поддержка свяжется с Вами в ближайшее время",
-      sender: "robot",
-      time: new Date().toTimeString()
-    })), 1500);
+    if (getSender() === 'user') {
+      dispatch(thunkDispatch(robotAnswer))
+    }
   }, [getSender()]);
 
   function getMessageList() {
