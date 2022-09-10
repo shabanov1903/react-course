@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import messengerReducer from './slices/messenger'
 import profileReducer from './slices/profile'
+import contactsReducer from './slices/contacts'
 import { thunkDispatch } from './thunk/thunk'
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -12,7 +13,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   messenger: messengerReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  contacts: contactsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -22,7 +24,8 @@ export const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware({
     thunk: {
       extraArgument: thunkDispatch
-    }
+    },
+    serializableCheck: false
   })
 })
 

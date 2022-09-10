@@ -10,7 +10,8 @@ import {
   Route,
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { thunkDispatch, robotAnswer } from '../../services/store/thunk/thunk'
+import { thunkDispatch } from '../../services/store/thunk/thunk'
+import { robotAnswer } from '../../services/store/thunk/robotAnswer'
 
 const Messenger = () => {
 

@@ -15,6 +15,7 @@ import Menu from 'components/menu/Menu';
 import { persistor, store } from './services/store/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import Contacts from 'components/contacts/Сontacts';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Menu/>}/>
               <Route path="/profile" element={<Profile/>}/>
+              <Route path="/contacts" element={<Contacts/>}/>
               <Route path="/messenger/*" element={<Messenger/>}/>
             </Routes>
           </BrowserRouter>
