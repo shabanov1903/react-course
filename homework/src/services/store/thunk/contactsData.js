@@ -7,8 +7,7 @@ export const contactsData = (quantity) => async (dispatch, getState) => {
     const json = await response.json();
     const data = json.data;
     dispatch(update(data));
-  } catch(err) {
-    const error = `Запрос завершился с ошибкой ${err}`;
-    alert(error);
+  } catch(e) {
+    console.error(`Ошибка: ${e.message}`);
   }
 }

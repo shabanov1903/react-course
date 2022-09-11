@@ -1,10 +1,14 @@
-import { addmessage } from "../slices/messenger";
+import { addMessageAsyncThunk } from "./extraReducers";
 
 export const robotAnswer = (dispatch, getState) => {
-  setTimeout(() => dispatch(addmessage({
+  const state = getState();
+  const message = {
     author: "Робот",
     text: "Техническая поддержка свяжется с Вами в ближайшее время",
     sender: "robot",
-    time: new Date().toTimeString()
-  })), 1500);
+    time: new Date().toTimeString(),
+    chatId: state.messenger.chatId
+  }
+
+  setTimeout(() => dispatch(addMessageAsyncThunk({...message, chatId: state.messenger.chatId})), 1500);
 }
