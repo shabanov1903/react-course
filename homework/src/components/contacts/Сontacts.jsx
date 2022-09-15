@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Сontacts.scss';
 import { thunkDispatch } from '../../services/store/thunk/thunk'
@@ -7,14 +7,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import ContactCard from 'components/contact-card/Contact-card';
 import { Button, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import { useAuth } from 'hooks/useAuth';
 
 const Contacts = () => {
 
   const [quantity, setQuantity] = useState('15');
-  // @ts-ignore
   const dispatch = useDispatch();
-  // @ts-ignore
   let contactsListRedux = useSelector((state) => state.contacts.contactList);
+
+  const auth = useAuth();
+  useEffect(() => auth.redirect(), [])
 
   const click = () => dispatch(thunkDispatch(contactsData(quantity)));
 

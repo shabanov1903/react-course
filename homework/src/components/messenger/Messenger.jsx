@@ -12,15 +12,16 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { thunkDispatch } from '../../services/store/thunk/thunk'
 import { robotAnswer } from '../../services/store/thunk/robotAnswer'
+import { useAuth } from 'hooks/useAuth';
 
 const Messenger = () => {
 
-  // @ts-ignore
   let chatListRedux = useSelector((state) => state.messenger.chatList);
-  // @ts-ignore
   let chatIdRedux = useSelector((state) => state.messenger.chatId);
-  // @ts-ignore
   const dispatch = useDispatch();
+
+  const auth = useAuth();
+  useEffect(() => auth.redirect(), [])
 
   useEffect(() => {
     if (getSender() === 'user') {

@@ -7,11 +7,10 @@ import { useState, useRef } from 'react';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addmessage } from 'services/store/slices/messenger';
+import { addMessageAsyncThunk } from 'services/store/thunk/extraReducers';
 
 export default function Form() {
 
-  // @ts-ignore
   const dispatch = useDispatch();
   
   const [author, setAuthor] = useState('');
@@ -20,7 +19,6 @@ export default function Form() {
   const textRef = useRef(null);
   const theme = useTheme();
 
-  // @ts-ignore
   let chatIdRedux = useSelector((state) => state.messenger.chatId);
 
   const click = () => {
@@ -30,12 +28,14 @@ export default function Form() {
 
   function fill(author, text, sender) {
     if (text === '' || author === '' || chatIdRedux !== getUrlId()) return;
-    dispatch(addmessage({
+    const message = {
       author: author,
       text: text,
       sender: sender,
-      time: new Date().toTimeString()
-    }));
+      time: new Date().toTimeString(),
+      chatId: chatIdRedux
+    };
+    dispatch(addMessageAsyncThunk(message));
     setText('');
   }
 
@@ -53,7 +53,6 @@ export default function Form() {
     <div>
       <Box
         component="form"
-        // @ts-ignore
         sx={{ bgcolor: theme.background, borderRadius: 2 }}
         noValidate
         autoComplete="off"

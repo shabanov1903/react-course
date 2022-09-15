@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Profile.scss';
 import Switch from '@mui/material/Switch';
 import { check } from 'services/store/slices/profile';
 import { useSelector, useDispatch } from 'react-redux';
+import { useAuth } from 'hooks/useAuth';
 
 const Profile = () => {
-  // @ts-ignore
   let checked = useSelector((state) => state.profile.isCheck);
-  // @ts-ignore
   const dispatch = useDispatch();
+  
+  const auth = useAuth();
+  useEffect(() => auth.redirect(), [])
 
   return (
     <div className="Profile">

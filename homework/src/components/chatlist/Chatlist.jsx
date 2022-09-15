@@ -13,13 +13,15 @@ import {
   useNavigate
 } from "react-router-dom";
 import { TextField } from '@mui/material';
-import { addchat, removechat, changeId } from 'services/store/slices/messenger'
+import { changeId } from 'services/store/slices/messenger'
 import { useSelector, useDispatch } from 'react-redux';
+import { addChatThunk, deleteChatThunk } from 'services/store/thunk/extraReducers';
+import { useAuth } from 'hooks/useAuth';
 
 export default function Chat({list}) {
+  const auth = useAuth();
 
   const dispatch = useDispatch();
-  // @ts-ignore
   let chatIdRedux = useSelector((state) => state.messenger.chatId);
 
   const [chatname, setChatname] = useState('');
@@ -28,12 +30,15 @@ export default function Chat({list}) {
 
   const add = (name) => {
     if (name === '') return;
-    dispatch(addchat(name));
+    dispatch(addChatThunk({
+      chatName: name,
+      accountId: auth.id
+    }));
     setChatname('');
   }
 
   const remove = (id) => {
-    dispatch(removechat(id));
+    dispatch(deleteChatThunk(id));
   }
   
   return(
@@ -41,7 +46,6 @@ export default function Chat({list}) {
       <Box sx={{
         width: '100%',
         maxWidth: 360,
-        // @ts-ignore
         bgcolor: theme.background,
         borderRadius: 2 }}>
         <nav aria-label="main mailbox folders">
@@ -72,7 +76,6 @@ export default function Chat({list}) {
           <TextField
             label="Создать чат (Enter)"
             variant="outlined"
-            // @ts-ignore
             onKeyDown={(e) => e.key === 'Enter' && add(e.target.value)}
             value={chatname}
             onChange={(event) => setChatname(event.target.value)}
